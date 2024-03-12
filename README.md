@@ -33,16 +33,16 @@ To perform steering convergence on a JetracerPro use the following commands in a
 ```
 roscore
 ```
-Then initialize the gamepad node
+Then initialize the gamepad node:
 ```
 rosrun racecar_pkg gamepad_convergence_v_ref.py
 ```
-Now launch the racecar_convergence_steer_angle_v_ref.launch file to perform convergence at a fixed reference velocity
+Now launch the racecar_convergence_steer_angle_v_ref.launch file to perform convergence at a fixed reference velocity:
 ```
 roslaunch racecar_pkg racecar_convergence_steer_angle_v_ref.launch
 ```
 
-If it is a new car make sure that in gamepad_convergence_v_ref.py the initial steering_offset is set to 0.0 and the inc_steering_offset to 0.01.
+If it is a new car make sure that in gamepad_convergence_v_ref.py the initial steering_offset is set to 0.0 and the incr_steering_offset to 0.01.
 
 ### System identification
 To start using DART it's thus necessary to understand what happens when we provide the system with a certain input, i.e. we need to identify the system's model. The folder Data_processing cointains the code and the data to build a kinematic and a dynamic bicycle model. The kinematic bicycle model is suitable for most kind of experiments that don't require to reach high speeds. Since it is simpler and computationally lighter we suggest trying it first and switching to the dynamic kinematic bicycle model only if actually needed. Also note that the data necessary to fit the kinematic bicycle model can be collected with the on-board sensors, while the dynamic bicycle model requires an external motion capture system. Let's start with the kinematic model.
