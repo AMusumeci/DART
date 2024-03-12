@@ -29,10 +29,18 @@ git clone https://github.com/Lorenzo-Lyons/DART.git
 ```
 The Data_processing folder contains the code and data required for system identification and can be run as simple python scripts with your favourite code editor like [Visual Studio Code](https://code.visualstudio.com/). To use the simulator and other ROS packages you will need a working ROS intallation, we used [ROS noetic](http://wiki.ros.org/noetic/Installation/Ubuntu) but other ROS versions should work too. You will then need to place the packages in a [catkin workspace](http://wiki.ros.org/catkin/Tutorials/create_a_workspace). 
 ### Steering convergence
-To perform convergence on a JetracerPro use the following commands in a new terminal:
-- roscore
-- rosrun racecar_pkg gamepad_convergence_v_ref.py
-- roslaunch racecar_pkg racecar_convergence_steer_angle_v_ref.launch
+To perform steering convergence on a JetracerPro use the following commands in a new terminal:
+```
+roscore
+```
+Then initialize the gamepad node
+```
+rosrun racecar_pkg gamepad_convergence_v_ref.py
+```
+Now launch the racecar_convergence_steer_angle_v_ref.launch file to perform convergence at a fixed reference velocity
+```
+roslaunch racecar_pkg racecar_convergence_steer_angle_v_ref.launch
+```
 
 If it is a new car make sure that in gamepad_convergence_v_ref.py the initial steering_offset is set to 0.0 and the inc_steering_offset to 0.01.
 
