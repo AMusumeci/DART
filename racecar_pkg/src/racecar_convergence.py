@@ -26,10 +26,10 @@ class racecar:
 		self.safety_value = 0
 
 		#set up ros nodes for this vehicle
-		
 		rospy.init_node('racecar_' + str(car_number), anonymous=True)
 		rospy.Subscriber('steering_' + str(car_number), Float32, self.callback_steering)
 		rospy.Subscriber('throttle_' + str(car_number), Float32, self.callback_throttle)
+		rospy.Subscriber('steering_offset' + str(car_number), Float32, self.callback_steering_offset)
 		rospy.Subscriber('safety_value', Float32, self.callback_safety)
 		self.commands_timestamped = rospy.Publisher("commands_timestamped_car_" + str(car_number), Float64MultiArray, queue_size=1)
 		print("finished setting up racecar " + str(car_number))	
@@ -72,46 +72,21 @@ class racecar:
 	def callback_throttle(self, throttle):
 		self.throttle = throttle.data # update global throttle variable
 
+	#Steering offset callback function
+	def callback_steering_offset(self, steering_offset):
+		self.car.steering_offset = steering_offset.data # update global steering offset variable
 	
 if __name__ == '__main__':
 	car_number = os.environ["car_number"]
 	print('car_number = ', os.environ["car_number"])
-	if float(car_number) == 1:
-		#steering_gain = -0.5
-		#steering_offset = + 0.08   # a negative value means go more to the right
-		# changing steering gain sign!
-		steering_gain = + 0.5
-		steering_offset = + 0.08   # a negative value means go more to the left
+	print('setting steer gain and offset for car number'+str(car_number))
 
-		print('setting steer gain and offset for car number 1')
-		print('steering gain = ',steering_gain)
-		print('steering offset = ',steering_offset)
-
-		
-
-	elif float(car_number) == 2:
-		print('setting steer gain and offset for car number 2')
-		steering_gain = - 0.5
-		steering_offset = - 0.18 * 0.5
-
-	elif float(car_number) == 3:
-		print('setting steer gain and offset for car number 3')
-		steering_gain = - 0.5
-		steering_offset = + 0.26 * 0.5
-
-	elif float(car_number) == 4:
-		print('setting steer gain and offset for car number 4')
-		steering_gain = - 0.5
-		steering_offset = - 0.12 # a negative value means go more to the right
-	
-	
-	else:
-		steering_gain = - 0.5
-		steering_offset = 0.0
-
-
+	steering_gain = +0.5
+	steering_offset = 0.0
 	throttle_gain = 0.6
+	print('steering gain = ',steering_gain)
 	print('throttle gain = ',throttle_gain)
+	print('steering offset = ',steering_offset)
 	racecar(car_number, steering_gain, steering_offset, throttle_gain)
 
 
