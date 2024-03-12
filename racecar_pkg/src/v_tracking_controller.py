@@ -78,9 +78,9 @@ class leader_longitudinal_controller_class:
 		#self.tau_ff = optimize.fsolve (func, th_first_guess)[0]
 
 		if v_ref < np.min(self.tau_v_table[:,1]):
-			print('the requested velocity is less than minimum velocity in the provided data, seetting to 0')
+			print('the requested velocity is less than minimum velocity in the provided data, setting to 0')
 		elif v_ref > np.max(self.tau_v_table[:,1]):
-			print('the requested velocity is more than maximum velocity in the provided data, seetting to maximum')
+			print('the requested velocity is more than maximum velocity in the provided data, setting to maximum')
 
 		self.tau_ff = np.interp(v_ref, self.tau_v_table[:,1], self.tau_v_table[:,0],left=0) 
 		print ('feed forward action =', self.tau_ff)

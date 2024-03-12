@@ -26,16 +26,36 @@ def teleop_gamepad(car_number):
 	pub_v_ref = rospy.Publisher('v_ref_' + str(car_number), Float32, queue_size=8)
 	pub_safety_value = rospy.Publisher('safety_value', Float32, queue_size=8)
 
-	rospy.init_node('teleop_gamepad_' + str(car_number), anonymous=True)
+	rospy.init_node('teleop_gamepad_convergence_' + str(car_number), anonymous=True)
 	rate = rospy.Rate(10) # 10hz
 
 	# initialize v_ref
 	v_ref = 0.0 # [m/s]
 	incr_v_ref = 0.05 # increase by this amount
-
+	
 	# initialize steering offset
-	steering_offset = 0.0 # [rad]
-	incr_steering_offset = 0.01 # increase by this amount
+	if float(car_number) == 2:
+		steering_offset_0 = +0.08
+		incr_steering_offset = 0.001 # increase by this amount
+
+	elif float(car_number) == 2:
+		steering_offset_0 = -0.18 * 0.5
+		incr_steering_offset = 0.001 # increase by this amount
+
+	elif float(car_number) == 3:
+		steering_offset_0 = +0.26 * 0.5
+		incr_steering_offset = 0.001 # increase by this amount
+
+	elif float(car_number) == 4:
+		steering_offset_0 = -0.091
+		incr_steering_offset = 0.001 # increase by this amount
+
+	else:
+		steering_offset_0 = 0.0
+		incr_steering_offset = 0.01 # increase by this amount
+
+	steering_offset = steering_offset_0 # [rad]
+
 
 	while not rospy.is_shutdown():
 		pygame.event.pump()
@@ -61,15 +81,15 @@ def teleop_gamepad(car_number):
 					print('v_ref = ', v_ref)
 
 				if j.get_button(0) == 1: # button A
-					v_ref = np.round(v_ref - incr_v_ref, 2) if np.round(v_ref - incr_v_ref, 2) >= 0 else 0
+					v_ref = np.round(v_ref - incr_v_ref, 2) if np.round(v_ref - incr_v_ref, 2) >= 0 else 0.0
 					print('v_ref = ', v_ref)
 
 				if j.get_button(1) == 1: # button B
-					steering_offset = np.round(steering_offset - incr_steering_offset, 2) # a negative value means go more to the right
+					steering_offset = np.round(steering_offset - incr_steering_offset, 3) if np.round(steering_offset - incr_steering_offset, 3) > -0.2 else -0.2  # a negative value means go more to the right
 					print('steering_offset = ', steering_offset)
 
 				if j.get_button(3) == 1: # button X
-					steering_offset = np.round(steering_offset + incr_steering_offset, 2)
+					steering_offset = np.round(steering_offset + incr_steering_offset, 3) if np.round(steering_offset + incr_steering_offset, 3) < 0.08 else 0.08 # a positive value means go more to the left
 					print('steering_offset = ', steering_offset)
 				
 		# publish v_ref

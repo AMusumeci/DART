@@ -37,7 +37,7 @@ def teleop_gamepad(car_number):
 		pygame.event.pump()
 
 		# Collect and publish steering
-		max_steering_rad = 0.3 #taken from curve
+		max_steering_rad = 1 #taken from curve
 		steering_angle = - j.get_axis(2) * max_steering_rad #Right thumbstick X  # NOTE that minus sign is needed to correct the direction of the analog stich (so that right means turn right)
 		pub_steering_angle.publish(steering_angle)
 

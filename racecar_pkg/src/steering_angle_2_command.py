@@ -16,7 +16,7 @@ class steering_angle_2_command:
 		# initialize stering_command-steering_angle lookup table
 		self.steering_vec = np.linspace(-1,1,100)
 
-		if car_number == car_number:
+		if car_number == str(4):
 			# define steering command to steering angle static mapping
 			a =  1.6379064321517944
 			b =  0.3301370143890381
