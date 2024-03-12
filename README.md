@@ -28,6 +28,13 @@ Clone this repo.
 git clone https://github.com/Lorenzo-Lyons/DART.git
 ```
 The Data_processing folder contains the code and data required for system identification and can be run as simple python scripts with your favourite code editor like [Visual Studio Code](https://code.visualstudio.com/). To use the simulator and other ROS packages you will need a working ROS intallation, we used [ROS noetic](http://wiki.ros.org/noetic/Installation/Ubuntu) but other ROS versions should work too. You will then need to place the packages in a [catkin workspace](http://wiki.ros.org/catkin/Tutorials/create_a_workspace). 
+### Steering convergence
+To perform convergence on a JetracerPro use the following commands in a new terminal:
+- roscore
+- rosrun racecar_pkg gamepad_convergence_v_ref.py
+- roslaunch racecar_pkg racecar_convergence_steer_angle_v_ref.launch
+
+If it is a new car make sure that in gamepad_convergence_v_ref.py the initial steering_offset is set to 0.0 and the inc_steering_offset to 0.01.
 
 ### System identification
 To start using DART it's thus necessary to understand what happens when we provide the system with a certain input, i.e. we need to identify the system's model. The folder Data_processing cointains the code and the data to build a kinematic and a dynamic bicycle model. The kinematic bicycle model is suitable for most kind of experiments that don't require to reach high speeds. Since it is simpler and computationally lighter we suggest trying it first and switching to the dynamic kinematic bicycle model only if actually needed. Also note that the data necessary to fit the kinematic bicycle model can be collected with the on-board sensors, while the dynamic bicycle model requires an external motion capture system. Let's start with the kinematic model.
