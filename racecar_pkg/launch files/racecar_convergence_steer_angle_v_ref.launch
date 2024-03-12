@@ -7,7 +7,7 @@
   <arg name="car_number_str_local" value="$(env car_number_str)"/>
 
   <!-- run racecar -->
-  <node name="racecar_$(arg car_number_str_local)" pkg="racecar_pkg" type="racecar_universal.py"
+  <node name="racecar_$(arg car_number_str_local)" pkg="racecar_pkg" type="racecar_convergence.py"
     output="screen"/>
 
   <!-- convert steering angle to steering command inputs -->
