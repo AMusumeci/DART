@@ -56,7 +56,7 @@ def teleop_gamepad(car_number):
 
 	steering_offset = steering_offset_0 # [rad]
 
-
+	print('\nUse "Y" and "A" to modify the v_ref, and "X" and "B" to adjust the steering offset\n')
 	while not rospy.is_shutdown():
 		pygame.event.pump()
 
